@@ -1,0 +1,13 @@
+{
+  "version": "0.1.0",
+  "scripts": {
+    "release": "standard-version",
+    "commitmsg": "commitlint -e $GIT_PARAMS"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-angular": "^7.0.1",
+    "husky": "^0.14.3",
+    "standard-version": "^4.2.0"
+  }
+}
