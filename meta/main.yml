@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: akoi
   author: Suzuki Shunsuke
   description: ansible role to install akoi
   license: MIT
