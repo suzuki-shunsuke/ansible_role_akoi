@@ -1,0 +1,32 @@
+---
+- hosts: default
+  pre_tasks:
+  - name: create /etc/akoi
+    file:
+      path: /etc/akoi
+      state: directory
+    become: yes
+  - name: copy file
+    copy:
+      src: akoi.yml
+      dest: /etc/akoi/akoi.yml
+    become: yes
+  roles:
+  - role: ansible_role_akoi
+    akoi_bin_path: /usr/local/bin/akoi-0.1.0
+    akoi_link_path: /usr/local/bin/akoi
+    akoi_config_path: /etc/akoi/akoi.yml
+    # akoi_config_path: /tmp/ansible_role_akoi/akoi.yml
+    become: yes
+  tasks:
+    #   - setup:
+    #     register: result
+    #   - debug:
+    #       var: result
+  - name: check akoi version
+    command: "sudo /usr/local/bin/akoi --version"
+    # command: "/tmp/ansible_role_akoi/akoi --version"
+    register: result
+    changed_when: false
+  - debug:
+      var: result.stdout

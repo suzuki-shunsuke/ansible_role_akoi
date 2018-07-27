@@ -1,0 +1,13 @@
+---
+# akoi configuration file path
+akoi_config_path: /etc/akoi/akoi.yml
+# akoi tarball's download timeout (sec)
+akoi_tarball_dl_timeout: 60
+# whether akoi tarball is removed after unarchived
+akoi_tarball_is_removed: no
+akoi_working_dir: /tmp
+akoi_version: 0.1.2
+akoi_systems:
+  Darwin: darwin
+  Windows: windows
+akoi_os: "{{akoi_systems.get(ansible_system, 'linux')}}"

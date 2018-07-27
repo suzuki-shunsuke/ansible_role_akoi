@@ -1,0 +1,18 @@
+---
+# akoi - binary version control system
+# https://github.com/suzuki-shunsuke/akoi
+bin_path: /usr/local/bin/{{.Name}}-{{.Version}}
+link_path: /usr/local/bin/{{.Name}}
+packages:
+  akoi:
+    url: https://github.com/suzuki-shunsuke/akoi/releases/download/{{.Version}}/akoi_{{.Version}}_linux_amd64.tar.gz
+    version: 0.1.2
+    files:
+    - name: akoi
+      archive: akoi
+  consul:
+    url: https://releases.hashicorp.com/consul/{{.Version}}/consul_{{.Version}}_linux_amd64.zip
+    version: 1.2.1
+    files:
+    - name: consul
+      archive: consul

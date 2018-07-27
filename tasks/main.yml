@@ -1,0 +1,9 @@
+---
+- name: assertion
+  import_tasks: assert.yml
+- name: install akoi binary
+  import_tasks: install_binary.yml
+- name: run akoi install
+  shell: "{{akoi_link_path}} install -c {{akoi_config_path}} -f ansible 2>&1"
+  register: result
+  changed_when: (result.stdout|from_json)["changed"]
