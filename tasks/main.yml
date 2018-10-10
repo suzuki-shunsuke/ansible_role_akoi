@@ -3,7 +3,15 @@
   import_tasks: assert.yml
 - name: install akoi binary
   import_tasks: install_binary.yml
-- name: run akoi install
-  shell: "{{akoi_link_path}} install -c {{akoi_config_path}} -f ansible 2>&1"
-  register: result
-  changed_when: (result.stdout|from_json)["changed"]
+- block:
+  - name: check whether akoi config file exists
+    stat:
+      path: "{{akoi_link_path}}"
+    register: akoi_config_stat
+  - name: run akoi install
+    shell: "{{akoi_link_path}} install -c {{akoi_config_path}} -f ansible 2>&1"
+    register: result
+    changed_when: (result.stdout|from_json)["changed"]
+    when: akoi_config_stat.stat.exists
+  when: akoi_config_path is defined
+

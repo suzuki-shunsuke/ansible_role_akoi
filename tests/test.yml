@@ -1,32 +1,30 @@
 ---
 - hosts: default
+  vars:
+    akoi_config_path: /etc/akoi/akoi.yml
   pre_tasks:
-  - name: create /etc/akoi
+  - name: create akoi configuration file parent directory
     file:
-      path: /etc/akoi
       state: directory
+      path: "{{akoi_config_path|dirname}}"
     become: yes
-  - name: copy file
+  - name: deploy akoi configuration file
     copy:
       src: akoi.yml
-      dest: /etc/akoi/akoi.yml
+      dest: "{{akoi_config_path}}"
     become: yes
   roles:
   - role: ansible_role_akoi
-    akoi_bin_path: /usr/local/bin/akoi-0.1.0
+    akoi_bin_path: /usr/local/bin/akoi-{{akoi_version}}
     akoi_link_path: /usr/local/bin/akoi
-    akoi_config_path: /etc/akoi/akoi.yml
-    # akoi_config_path: /tmp/ansible_role_akoi/akoi.yml
+    akoi_version: 1.2.1
+    akoi_os: linux
     become: yes
   tasks:
-    #   - setup:
-    #     register: result
-    #   - debug:
-    #       var: result
   - name: check akoi version
-    command: "sudo /usr/local/bin/akoi --version"
-    # command: "/tmp/ansible_role_akoi/akoi --version"
+    command: "/usr/local/bin/akoi --version"
     register: result
     changed_when: false
+    become: yes
   - debug:
       var: result.stdout

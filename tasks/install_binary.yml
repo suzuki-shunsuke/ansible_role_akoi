@@ -1,8 +1,8 @@
 ---
 - name: check whether the binary has already installed
   stat:
-    path: "{{akoi_link_path}}"
-  register: akoi_link_stat
+    path: "{{akoi_bin_path}}"
+  register: akoi_bin_stat
 - block:
   # install binary
   - name: check working dir
@@ -20,7 +20,7 @@
     register: akoi_tarball_stat
   - name: download akoi tarball
     get_url:
-      url: "https://github.com/suzuki-shunsuke/akoi/releases/download/{{akoi_version}}/akoi_{{akoi_version}}_{{akoi_os}}_amd64.tar.gz"
+      url: "https://github.com/suzuki-shunsuke/akoi/releases/download/v{{akoi_version}}/akoi_{{akoi_version}}_{{akoi_os}}_amd64.tar.gz"
       dest: "{{akoi_working_dir}}"
       timeout: "{{akoi_tarball_dl_timeout|default(omit)}}"
       mode: 0777
@@ -41,11 +41,6 @@
       dest: "{{akoi_bin_path}}"
       mode: 0755
       remote_src: yes
-  - name: create a symbolic link to akoi binary
-    file:
-      src: "{{akoi_bin_path}}"
-      dest: "{{akoi_link_path}}"
-      state: link
   - name: remove binary from working dir
     file:
       state: absent
@@ -59,4 +54,9 @@
       path: "{{akoi_working_dir}}/akoi_{{akoi_version}}_{{akoi_os}}_amd64.tar.gz"
       state: absent
     when: akoi_tarball_is_removed
-  when: not akoi_link_stat.stat.exists
+  when: not akoi_bin_stat.stat.exists
+- name: create a symbolic link to akoi binary
+  file:
+    src: "{{akoi_bin_path}}"
+    dest: "{{akoi_link_path}}"
+    state: link
