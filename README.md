@@ -19,8 +19,7 @@ Please deploy akoi configuration file at remote server before run the ansible ro
 
 name | required | default | example | description
 --- | --- | --- | --- | ---
-akoi_bin_path | yes | | /usr/local/bin/akoi-{{akoi_version}} |
-akoi_link_path | yes | | /usr/local/bin/akoi |
+akoi_config_path | no | | /etc/akoi/akoi.yml |
 
 And please see
 
@@ -44,8 +43,8 @@ And please see
     become: yes
   roles:
   - role: suzuki-shunsuke.akoi
-    akoi_bin_path: /usr/local/bin/akoi-0.1.2
-    akoi_link_path: /usr/local/bin/akoi
+    akoi_config_path: /etc/akoi/akoi.yml
+    akoi_version: 1.3.0
     become: yes
 ```
 

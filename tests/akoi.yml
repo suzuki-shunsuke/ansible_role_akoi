@@ -5,8 +5,8 @@ bin_path: /usr/local/bin/{{.Name}}-{{.Version}}
 link_path: /usr/local/bin/{{.Name}}
 packages:
   akoi:
-    url: https://github.com/suzuki-shunsuke/akoi/releases/download/{{.Version}}/akoi_{{.Version}}_linux_amd64.tar.gz
-    version: 0.1.2
+    url: https://github.com/suzuki-shunsuke/akoi/releases/download/v{{.Version}}/akoi_{{.Version}}_linux_amd64.tar.gz
+    version: 1.3.0
     files:
     - name: akoi
       archive: akoi
