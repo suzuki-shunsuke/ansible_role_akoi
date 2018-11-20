@@ -1,9 +1,19 @@
 ---
-- assert:
+- name: check required variables are defined
+  assert:
     that:
-    - akoi_config_path is defined
     - akoi_bin_path is defined
     - akoi_link_path is defined
     - akoi_tarball_is_removed is defined
     - akoi_working_dir is defined
     - akoi_version is defined
+- block:
+  - name: check akoi_config_path if it is defined
+    stat:
+      path: "{{akoi_config_path}}"
+    register: stat_akoi_config_path
+  - name: check akoi_config_path if it is defined
+    assert:
+      that:
+      - stat_akoi_config_path.stat.exists
+  when: akoi_config_path is defined
