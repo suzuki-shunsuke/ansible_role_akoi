@@ -1,0 +1,14 @@
+---
+# check akoi_bin_path
+- name: check whether akoi_bin_path has already been installed
+  stat:
+    path: "{{akoi_bin_path}}"
+  register: stat_akoi_bin_path
+- name: download akoi_bin_path
+  import_tasks: download_akoi_bin_path.yml
+  when: not stat_akoi_bin_path.stat.exists
+- name: run akoi install
+  shell: "{{akoi_bin_path}} install -c {{akoi_config_path}} -f ansible 2>&1"
+  register: result
+  changed_when: (result.stdout|from_json)["changed"]
+  when: akoi_config_path is defined
